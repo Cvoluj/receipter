@@ -1,29 +1,13 @@
 import logging
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import server_setting
-
-logging.basicConfig(level=server_setting.LOG_LEVEL)
-
-
-origins = [
-    f'http://{server_setting.APP_HOST}:{server_setting.APP_PORT}'
-]
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+from config import server_settings
+from services.template_service import TemplateService
+from services.email_service import EmailService
+from receipt_consumer import ReceiptConsumer
 
 
-
+logging.basicConfig(level=server_settings.LOG_LEVEL)
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host=server_setting.HOST, port=server_setting.PORT)
+    consumer = ReceiptConsumer(TemplateService(), EmailService())
+    consumer.consume()

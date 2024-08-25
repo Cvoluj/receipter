@@ -1,5 +1,5 @@
-from app.config.config import server_setting
+from config.config import server_settings
 
 __all__ = (
-    server_setting
+    server_settings
 )

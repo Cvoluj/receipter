@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermal Paper Receipt</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+        flex-direction: column;
+      }
+
+      .receipt {
+        display: block;
+        max-width: 420px;
+        margin: 0 auto;
+        padding: 20px;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 15px 15px 0px 0px;
+        border-radius: 15px 15px 0px 0px; 
+        background-color: #f8f8f8;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        --mask: 
+          linear-gradient(to top,#0000 14px,#000 0),
+          radial-gradient(14px,#000 98%,#0000) bottom/25.9px 28px;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+      }
+      
+      .service {
+        padding: 15px;
+        margin: 15px auto;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: xx-large;
+        color: #000;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="receipt">
+      <table style="width:100%;max-width:420px;word-break:keep-all">
+        <tbody>
+          <tr>
+            <td colspan="4" style="text-align:center">{{ name }}</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align:center">{{ business }}</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align:center">{{ address }}</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align:center">{{ ID }}</td>
+          </tr>
+          <tr>
+            <td colspan="4" style="color:#161b25;opacity:0.5;max-width:100px;overflow:hidden;white-space:nowrap;padding:8px 0;text-align:center">
+              * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+            </td>
+          </tr>
+          {% for item in items %}
+          <tr>
+            <td style="padding:5px 5px 5px 10px;width:50%;text-align: left;">
+              <span class="il">{{ item.name }}</span>
+            </td>
+            <td style="padding:5px 5px 5px 5px;color:gray;width:30%;text-align:right">
+              {{ item.quantity }} x {{ item.price }} 
+            </td>
+            <td style="padding:5px 5px 5px 20px;width:50%;text-align: right;">
+              <span class="il">{{ item.price * item.quantity }}</span>
+            </td>
+            <td style="padding:5px 5px 5px 5px;width:13%;text-align:right;white-space:nowrap">
+              {{ item.total }}
+            </td>
+            <td style="padding:5px 5px 5px 5px;width:7%;white-space:nowrap"></td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="3" style="padding:0 5px 5px 10px"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding:5px 10px">Банківська картка</td>
+            <td style="padding:5px;text-align:right">{{ total }}</td>
+            <td style="padding:5px;text-align:right">$</td>
+            <td></td>
+          </tr>
+          <tr style="font-weight:bold;font-size:16px">
+            <td colspan="2" style="padding:5px">Сума</td>
+            <td style="padding:5px;text-align:right;white-space:nowrap">{{ total }}</td>
+            <td style="padding:5px;text-align:right;white-space:nowrap">$</td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="m_3036655776368778503cr-organization-footer-none" class="m_3036655776368778503cr-custom-content-container-none" style="display:none"></div>
+      <table style="width:100%;max-width:420px;word-break:break-word">
+        <tbody>
+          <tr>
+            <td style="color:#161b25;opacity:0.5;max-width:100px;overflow:hidden;white-space:nowrap;padding:8px 0;text-align:center">
+              * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table style="width:100%;word-break:break-word">
+                <tbody>
+                  <tr>
+                    <td style="margin:0;padding:0 10px;font-size:12px;color:gray;width:100%"> 
+                      <div class="service">
+                        <a href="https://github.com/Cvoluj/listed-store">INVOICE-SERVICE</a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
