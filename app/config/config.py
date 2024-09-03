@@ -9,6 +9,8 @@ class ServerSettings(BaseSettings):
     BASE_DIR: pathlib.Path = pathlib.Path(__file__).parent.parent
     LOG_LEVEL: str
 
+    ENCRYPTION_KEY: str
+
     model_config = SettingsConfigDict(env_file='.env')
 
 server_settings = ServerSettings()

@@ -4,6 +4,7 @@ import json
 
 from services.email_service import EmailService
 from services.template_service import TemplateService
+from serializers.smtp import serialize_to_smpt_dataclass
 from config import server_settings
 
 class ReceiptConsumer:
@@ -19,12 +20,13 @@ class ReceiptConsumer:
 
         def callback(ch, method, properties, body):
             data = json.loads(body)
+
             email = data['email']
             subject = data['subject']
             context = data['context']
-
+            smtp = serialize_to_smpt_dataclass(data['smtp'])
             body = self.template_service.render_receipt(context)
-            self.email_service.send_receipt(email, subject, body)
+            self.email_service.send_receipt(email, subject, body, smtp)
 
         channel.basic_consume(queue=server_settings.RABBITMQ_QUEUE, on_message_callback=callback, auto_ack=True)
 

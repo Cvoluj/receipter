@@ -1,24 +1,25 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from config import server_settings
+
+from serializers.smtp import SMTP
+
 
 class EmailService:
     @staticmethod
-    def send_receipt(to_email: str, subject: str, body: str):
-        # msg = MIMEMultipart()
-        # msg['From'] = server_settings.from_email
-        # msg['To'] = to_email
-        # msg['Subject'] = subject
+    def send_receipt(email: str, subject: str, body: str, smtp: SMTP):
+        msg = MIMEMultipart()
+        msg['From'] = smtp.smtp_email
+        msg['To'] = email
+        msg['Subject'] = subject
 
-        # msg.attach(MIMEText(body, 'plain'))
+        msg.attach(MIMEText(body, 'html'))
 
-        # try:
-        #     with smtplib.SMTP(server_settings.smtp_server, server_settings.smtp_port) as server:
-        #         server.starttls()
-        #         server.login(server_settings.smtp_user, server_settings.smtp_password)
-        #         server.send_message(msg)
-        # except Exception as e:
-        #     print(f"Failed to send email: {e}")
-        #     raise 
+        try:
+            with smtplib.SMTP_SSL(smtp.smtp_server, smtp.smtp_port) as server:
+                server.login(smtp.smtp_email, smtp.smtp_password)
+                server.send_message(msg)
+        except Exception as e:
+            print(f"Failed to send email: {e}")
+            raise 
         print(body)
